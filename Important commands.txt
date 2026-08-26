@@ -1,0 +1,92 @@
+Mai intai stai in ~/turtlebot3_ws
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+Platoon launch:
+
+colcon build --packages-select platooning_pkg
+
+source install/local_setup.bash
+
+ros2 launch platooning_pkg platoon_launch.py
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+Launch a single TB3B
+
+source /opt/ros/jazzy/setup.bash
+
+export TURTLEBOT3_MODEL=burger
+
+ros2 launch turtlebot3_gazebo empty_world.launch.py
+
+------------------------------------------------------------------
+-----------------------------------------------------------------
+Only one TB3B target/trajectory tracking:
+
+colcon build --packages-select platooning_pkg
+
+source install/local_setup.bash
+
+ros2 run platooning_pkg target\trajectory_tracker
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+leader-follower activation:
+
+follower1->leader
+ros2 run platooning_pkg follower_node / braking_follower --ros-args -p my_name:=tb3_follower1 -p target_name:=tb3_leader -p my_spawn_x:="-0.3" -p target_spawn_x:="0.0"
+
+follower2->follower1
+ros2 run platooning_pkg follower_node / braking_follower --ros-args -p my_name:=tb3_follower2 -p target_name:=tb3_follower1 -p my_spawn_x:="-0.6" -p target_spawn_x:="-0.3"
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+Linear commands on x-axis:
+ros2 topic pub /tb3_leader/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.14, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+
+ros2 topic pub /tb3_leader/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.14, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+La linear: x whatever value in this interval (0,0.14)
+
+package.xml
+
+rosdep update
+rosdep install --from-paths src --ignore-src -r -y
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+FDI-attack:
+
+launching:
+
+colcon build --packages-select platooning_pkg
+
+source install/local_setup.bash
+
+ros2 launch platooning_pkg spawn_platoon_FDI_3/4car.launch.py
+Here write 3 or 4, not 3/4
+
+damaging the leader:
+ros2 run platooning_pkg FDI_attack --ros-args -p target_name:=tb3_leader
+
+follower1-leader
+ros2 run platooning_pkg FDI_feasable_full_graph --ros-args -p my_name:=tb3_follower1 -p target_name:=tb3_leader -p my_offset:=2.0 -p target_offset:=3.0
+
+follower1-leader
+follower1 is connected to the damaged sensor of the leader
+ros2 run platooning_pkg FDI_feasable_full_graph --ros-args -p my_name:=tb3_follower1 -p target_name:=tb3_leader -p my_offset:=2.0 -p target_offset:=3.0 --remap /tb3_leader/odom:=/tb3_leader/odom_spoofed
+
+follower2-follower1
+ros2 run platooning_pkg FDI_feasable_full_graph --ros-args -p my_name:=tb3_follower2 -p target_name:=tb3_follower1 -p my_offset:=1.0 -p target_offset:=2.0
+
+follower2-follower1
+follower2 is connected to the damaged sensor of the follower1
+ros2 run platooning_pkg FDI_feasable_full_graph --ros-args -p my_name:=tb3_follower2 -p target_name:=tb3_follower1 -p my_offset:=1.0 -p target_offset:=2.0 --remap /tb3_follower1/odom:=/tb3_follower1/odom_spoofed
+
+follower2-follower3
+ros2 run platooning_pkg FDI_feasable_full_graph --ros-args -p my_name:=tb3_follower3 -p target_name:=tb3_follower2 -p my_offset:=0.0 -p target_offset:=1.0 --remap /tb3_follower1/odom:=/tb3_follower1/odom_spoofed
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+Curve case:
+
