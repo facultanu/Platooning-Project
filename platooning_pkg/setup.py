@@ -52,8 +52,6 @@ setup(
             'FDI_feasable_path_graph = platooning_pkg.FDI_feasable_path_graph:main',
             # FDI-resistant full-graph
             'FDI_feasable_full_graph = platooning_pkg.FDI_feasable_full_graph:main',
-            # Curve platooning
-            'curve_platoon_follower = platooning_pkg.curve_platoon_follower:main',
         ],
     },
 )
