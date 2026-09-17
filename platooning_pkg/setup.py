@@ -52,6 +52,10 @@ setup(
             'FDI_feasable_path_graph = platooning_pkg.FDI_feasable_path_graph:main',
             # FDI-resistant full-graph
             'FDI_feasable_full_graph = platooning_pkg.FDI_feasable_full_graph:main',
+            # Leader BOTH maneuvers
+            'leader_both_maneuvers = platooning_pkg.leader_both_maneuvers:main',
+            # Follower BOTH maneuvers
+            'follower_both_maneuvers = platooning_pkg.follower_both_maneuvers:main',
         ],
     },
 )
