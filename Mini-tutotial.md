@@ -84,3 +84,8 @@ In another terminal
 cd turtlebot3_ws/src
 ros2 run platooning_pkg <name_as_it_is_in_setup.py>
 ```
+
+## Troubleshooting
+
+* **NumPy & CVXPY Version Mismatch:** If optimization solver nodes crash or throw CVXPY/NumPy errors, verify you are explicitly running **CVXPY 1.4.4** and **OSQP 1.1.3**.
+* **Missing Package/Node Errors:** If `ros2 run` cannot locate your executable, ensure that you have the actual script in platooning_pkg, then execute `colcon build` and source your environment with `source install/local_setup.bash`.
