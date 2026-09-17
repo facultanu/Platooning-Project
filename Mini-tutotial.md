@@ -30,7 +30,7 @@ This repository documents an incremental, step-by-step approach to multi-agent r
 
 * **Operating System:** Linux Ubuntu 24.04 (WSL2 works as well)
 * **Middleware:** [ROS 2 Jazzy](https://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Development-Setup.html)
-* **Hardware Support:** [TurtleBot3 Drivers](https://docs.robotis.com/docs/systems/turtlebot3/overview/) (configured for `burger` or `waffle_pi`)
+* **Hardware Support:** [TurtleBot3 Drivers](https://docs.robotis.com/docs/systems/turtlebot3/overview/) (configured for `burger`. For `waffle_pi`, make sure to make the necessary modifications)
 * **Optimization Libraries:**
   * **OSQP** (Quadratic Programming solver) — *Version 1.1.3*
   * **CVXPY** (Convex optimization & constraint collection) — *Version 1.4.4* *(Note: Newer versions may conflict with NumPy)*
