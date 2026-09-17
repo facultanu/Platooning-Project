@@ -42,10 +42,10 @@ This repository documents an incremental, step-by-step approach to multi-agent r
 ```text
 turtlebot3_ws/
 └── src/
-    └── platooning_pkg/
-        ├── config/         # System parameters and configuration files
+    └── platooning_pkg/ 
         ├── launch/         # Simulation and experiment launch scripts
-        ├── platooning_pkg/ # Core Python nodes, controllers (CLF, CBF, APF)
+        ├── models/         # turtelbot3 burger model
+        ├── platooning_pkg/ # Core Python nodes, controllers (CBF, CBF with FDI APF)
         ├── package.xml     # ROS 2 package dependencies
         └── setup.py        # Python build and entry-point configurations
 
